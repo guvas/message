@@ -4,6 +4,7 @@ import no.message.model.Bruker;
 import no.message.model.Meldinger;
 import no.message.service.BrukerService;
 import no.message.service.MeldingService;
+import no.message.testdata.TestData;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,56 +37,31 @@ public class LoginControllerTest {
 
     @Test
     public void test_login(){
-        when(brukerService.hentBruker(anyString())).thenReturn(testBruker1());
-        when(meldingService.getAlleMineMeldinger(any(Bruker.class))).thenReturn(testMeldinger());
+        when(brukerService.hentBruker(anyString())).thenReturn(new TestData().testBruker1());
+        when(meldingService.getAlleMineMeldinger(any(Bruker.class))).thenReturn(new TestData().testMeldinger());
 
-        String result = loginController.login(testBruker1().getName(), model);
+        String result = loginController.login(new TestData().testBruker1().getName(), model);
 
-        verify(brukerService, times(1)).hentBruker(testBruker1().getName());
+        verify(brukerService, times(1)).hentBruker(new TestData().testBruker1().getName());
         verify(meldingService, times(1)).getAlleMineMeldinger(any(Bruker.class));
 
         Object list = model.get("meldinger");
         assertNotNull(list);
-        assertThat(model, hasEntry("username", (Object) testBruker1().getName()));
-        assertEquals(result, "inbox");
+        assertThat(model, hasEntry("username", (Object) new TestData().testBruker1().getName()));
+        assertEquals(result, "meldinger");
 
     }
-
 
     @Test
     public void test_login_opprett_bruker_hvis_ikke_finnes_i_db(){
         when(brukerService.hentBruker(anyString())).thenReturn(null);
-        when(brukerService.createBruker(any(Bruker.class))).thenReturn(testBruker2());
+        when(brukerService.createBruker(any(Bruker.class))).thenReturn(new TestData().testBruker2());
 
-        String result = loginController.login(testBruker1().getName(), model);
+        String result = loginController.login(new TestData().testBruker1().getName(), model);
 
-        verify(brukerService, times(1)).hentBruker(testBruker1().getName());
+        verify(brukerService, times(1)).hentBruker(new TestData().testBruker1().getName());
         verify(brukerService, times(1)).createBruker(any(Bruker.class));
 
-        assertEquals(result, "inbox");
-    }
-
-    private Bruker testBruker1(){
-        Bruker bruker = new Bruker();
-        bruker.setBrukerid(1L);
-        bruker.setName("Some Name1");
-        return bruker;
-    }
-    private Bruker testBruker2(){
-        Bruker bruker = new Bruker();
-        bruker.setBrukerid(2L);
-        bruker.setName("Some Name2");
-        return bruker;
-    }
-
-    private List<Meldinger> testMeldinger(){
-        Meldinger meldinger = new Meldinger();
-        meldinger.setFrabruker(testBruker1());
-        meldinger.setTilbruker(testBruker2());
-        meldinger.setMelding("some melding");
-        meldinger.setMldingId(1L);
-        List<Meldinger> list = new ArrayList<>();
-        list.add(meldinger);
-        return list;
+        assertEquals(result, "meldinger");
     }
 }

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<div layout:fragment="content">
+
+    <div class="row">
+        <div>
+            <table id="meldingTabel" class="table table-bordered" style="width:1000px; position: inherit;">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Fra</th>
+                    <th>Melding</th>
+
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div style="padding-top: 400px; position: inherit;">
+        <div id="feedback"></div>
+            <input type="text" id="tilbruker" name="tilbruker" autofocus="autofocus" class="form-control" placeholder="Til bruker"/><br>
+            <textarea type="text" id="melding" name="melding" autofocus="autofocus" class="form-control" placeholder="Skriv inn tekst"></textarea><br>
+            <input type="hidden" id="username" name="username" th:value="${username}">
+            <input type="submit" value="Send" class="btn btn-primary" onclick="sendMelding()"/>
+    </div>
+</div>
+</html>

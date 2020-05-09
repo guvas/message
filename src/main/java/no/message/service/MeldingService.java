@@ -20,4 +20,8 @@ public class MeldingService {
     public List<Meldinger> getAlleMineMeldinger(Bruker bruker){
         return meldingRepository.findAllByTilbruker(bruker);
     }
+
+    public Meldinger sendMelding(Meldinger meldinger){
+        return meldingRepository.save(meldinger);
+    }
 }

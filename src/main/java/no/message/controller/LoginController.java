@@ -5,6 +5,7 @@ import no.message.model.Meldinger;
 import no.message.service.BrukerService;
 import no.message.service.MeldingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequestMapping("/login")
+@Scope("session")
 public class LoginController {
     private BrukerService brukerService;
     private MeldingService meldingService;
@@ -25,7 +26,7 @@ public class LoginController {
         this.meldingService = meldingService;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(@RequestParam("username") String brukernavn, ModelMap model) {
         Bruker brukeren = brukerService.hentBruker(brukernavn);
         if(brukeren != null){
@@ -34,14 +35,14 @@ public class LoginController {
             if(!meldingers.isEmpty()){
                 model.addAttribute("meldinger", meldingers);
             }
-            return "inbox";
+            return "meldinger";
         }else {
             Bruker bruker = new Bruker();
             bruker.setName(brukernavn);
             brukerService.createBruker(bruker);
         }
         model.addAttribute("username", brukernavn);
-        return "inbox";
+        return "meldinger";
     }
 
 
