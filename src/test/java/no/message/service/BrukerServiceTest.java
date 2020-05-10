@@ -59,6 +59,7 @@ public class BrukerServiceTest {
 
         assertEquals(bruker.getBrukerid(), new TestData().testBruker1().getBrukerid());
         assertEquals(bruker.getName(), new TestData().testBruker1().getName());
+        assertEquals(bruker.toString(), new TestData().testBruker1().toString());
     }
 
     @Test(expected = NullPointerException.class)

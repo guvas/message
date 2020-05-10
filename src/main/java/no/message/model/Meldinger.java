@@ -59,4 +59,14 @@ public class Meldinger {
     public void setTilbruker(Bruker tilbruker) {
         this.tilbruker = tilbruker;
     }
+
+    @Override
+    public String toString() {
+        return "Meldinger{" +
+                "meldingId=" + meldingId +
+                ", melding='" + melding + '\'' +
+                ", frabruker=" + frabruker +
+                ", tilbruker=" + tilbruker +
+                '}';
+    }
 }
