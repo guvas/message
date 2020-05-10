@@ -14,5 +14,5 @@ og to meldingene som ble sendt til hverandre.
 $ mvn spring-boot:run
 ```
 
-##Login side
+## Login side
  på  http://localhost:8080 i nettleseren og fyll inn en brukernavn
